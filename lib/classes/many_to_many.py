@@ -32,8 +32,35 @@ class Author:
 
 class Magazine:
     def __init__(self, name, category):
-        self.name = name
-        self.category = category
+        if isinstance(name, str):
+            if len(name) => 2 and <= 16:
+                self.name = name
+            else:
+                raise Exception("Name does not fall within the specified limit")
+        else:
+            raise Exception("Name must be a string")
+        
+    @property
+    def name(self):
+        return self.name
+    
+    @name.setter
+
+
+    def category(self):
+        if isinstance(categories, str):
+            if len(categories) > 0:
+                self.categories = categories
+            else:
+                raise Exception("Name must be longer than 0 characters")
+        else:
+            raise Exception("Name must be a string")
+        
+    @property
+    def categories(self);
+        return self.categories
+
+        
 
     def articles(self):
         pass
