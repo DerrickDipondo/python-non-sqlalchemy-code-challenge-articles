@@ -1,8 +1,41 @@
 class Article:
     def __init__(self, author, magazine, title):
-        self.author = author
-        self.magazine = magazine
-        self.title = title
+        # The logic for validating author instance
+        if isinstance(author, Author):
+            self._author = author
+        else:
+            raise Exception("Author must be an Author instance")
+        
+        # The logic for validating magazine instance
+        if isinstance(magazine, Magazine):
+            self._magazine = magazine
+        else:
+            raise Exception("Magazine must be a Magazine instance")
+        
+        # The logic for validating title
+        if isinstance(title, str):
+            if 5 <= len(title) <= 50:
+                self._title = title
+            else:
+                raise Exception("Title does not fall within the specified limit")
+        else:
+            raise Exception("Title must be a string")
+        
+    @property
+    def author(self):
+        return self._author
+    
+    @property
+    def magazine(self):
+        return self._magazine
+    
+    @property
+    def title(self):
+        return self._title
+
+        
+
+        pass
         
 class Author:
     def __init__(self, name):
@@ -32,33 +65,54 @@ class Author:
 
 class Magazine:
     def __init__(self, name, category):
+
+        # The logic for validating name
         if isinstance(name, str):
-            if len(name) => 2 and <= 16:
-                self.name = name
+            if 2 <= len(name) <= 16:
+                self._name = name
             else:
                 raise Exception("Name does not fall within the specified limit")
         else:
             raise Exception("Name must be a string")
         
+        # The logic for validating category
+        if isinstance(category, str):
+            if len(category) > 0:
+                self._category = category
+            else:
+                raise Exception("Category must be greater than 0")
+        else:
+            raise Exception("Category must be a string")
+    
     @property
     def name(self):
-        return self.name
+        return self._name
     
     @name.setter
-
-
-    def category(self):
-        if isinstance(categories, str):
-            if len(categories) > 0:
-                self.categories = categories
+    def name(self, new_name):
+        if isinstance(new_name, str):
+            if 2 <= len(new_name) <=16:
+                self._name = new_name
             else:
-                raise Exception("Name must be longer than 0 characters")
-        else:
-            raise Exception("Name must be a string")
+                raise Exception("Name does not fall within the specified limit")
         
+        else: 
+            raise Exception("Name must be a string")
+    
     @property
-    def categories(self);
-        return self.categories
+    def category(self):
+        return self._category
+    
+    @category.setter
+    def category(self, new_category):
+        if isinstance(new_category, str):
+            if len(new_category) > 0:
+                self._category = new_category
+            else:
+                raise Exception("Category must be greater than 0")
+        else:
+            raise Exception("Category must be a string")
+
 
         
 
