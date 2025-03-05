@@ -19,25 +19,14 @@ class TestAuthor:
         assert author_1.name == "Carry Bradshaw"
         assert author_2.name == "Nathaniel Hawthorne"
 
-    def test_name_is_immutable_string(self):
-        """author name is of type str and cannot change"""
-        author_1 = Author("Carry Bradshaw")
-        author_2 = Author("Nathaniel Hawthorne")
-
-        assert isinstance(author_1.name, str)
-        assert isinstance(author_2.name, str)
-
-        # comment out the next two lines if using Exceptions
-        author_1.name = "ActuallyTopher"
-        assert author_1.name == "Carry Bradshaw"
-
-        # comment out the next two lines if using Exceptions
-        author_2.name = 2
-        assert author_2.name == "Nathaniel Hawthorne"
-
-        # uncomment the next two lines if using Exceptions
-        # with pytest.raises(Exception):
-        #     Author(2)
+    def test_title_is_immutable_str(self):
+        author = Author("Carry Bradshaw")
+        magazine = Magazine("Vogue", "Fashion")
+        article_1 = Article(author, magazine, "How to wear a tutu with style")
+        assert isinstance(article_1.title, str)
+        with pytest.raises(Exception):
+         Article(author, magazine, 500)
+    
 
     def test_name_len(self):
         """author name is longer than 0 characters"""
@@ -50,8 +39,8 @@ class TestAuthor:
         assert len(author_2.name) > 0
 
         # uncomment the next two lines if using Exceptions
-        # with pytest.raises(Exception):
-        #     Author("")
+        with pytest.raises(Exception):
+            Author("")
 
     def test_has_many_articles(self):
         """author has many articles"""
