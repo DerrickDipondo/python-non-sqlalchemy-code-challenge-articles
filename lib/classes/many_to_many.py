@@ -25,9 +25,23 @@ class Article:
     def author(self):
         return self._author
     
+    @author.setter
+    def author(self, new_author):
+        if isinstance(new_author, Author):
+            self._author = new_author
+        else:
+            raise Exception("New_author must be an Author instance")
+    
     @property
     def magazine(self):
         return self._magazine
+    
+    @magazine.setter
+    def magazine(self, new_magazine):
+        if isinstance(new_magazine, Magazine):
+            self._magazine = new_magazine
+        else:
+            raise Exception(New Magazine must a Magazine instance)
     
     @property
     def title(self):
@@ -50,18 +64,39 @@ class Author:
     @property
     def name(self):
         return self._name
-
+    
+    # Returns a list of all articles the author has written
     def articles(self):
-        pass
-
+        return [article for article in Author._all_articles if article.author == self]
+    
+    # Returns a unique list of magazines the author has contributed to
     def magazines(self):
-        pass
+        return list(set(article.magazine for article in self.articles()))
 
+    # Creates and returns a new Article instance associated with this author
     def add_article(self, magazine, title):
-        pass
+        if isinstance(magazine, Magazine):
+            if isinstance(title, str):
+                if 5 <= len(title) <= 50:
+                    new_article = Article(self, magazine, title)  
+                    Author._all_articles.append(new_article)  
+                    return new_article
+                else:
+                    raise Exception("Title must be between 5 and 50 characters")
+            else:
+                raise Exception("Title must be a string")
+        else:
+            raise Exception("Magazine must be an instance of the Magazine class")
 
+    # Returns a unique list of magazine categories or None if no articles
     def topic_areas(self):
-        pass
+        articles = self.articles()
+        if len(articles) > 0:
+            categories = list(set(article.magazine.category for article in articles))
+            return categories if len(categories) > 0 else None
+        else:
+            return None
+        
 
 class Magazine:
     def __init__(self, name, category):
@@ -121,9 +156,23 @@ class Magazine:
 
     def contributors(self):
         pass
+    
 
+    # Returns a list of title strings of all articles or None if no articles
     def article_titles(self):
-        pass
-
+        
+        if not self._articles:
+            return None
+        return [article.title for article in self._articles]
+    
+    # Returns a list of authors with >2 articles or None if none qualify
     def contributing_authors(self):
-        pass
+        
+        author_count = {}
+        for article in self._articles:
+            author = article.author
+            author_count[author] = author_count.get(author, 0) + 1
+        
+        top_authors = [author for author, count in author_count.items() if count > 2]
+        return top_authors if top_authors else None
+        
